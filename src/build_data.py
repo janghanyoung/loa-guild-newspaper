@@ -83,5 +83,5 @@ def build():
 if __name__ == "__main__":
     data = build()
 
-    with open("public/daily.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    with open("daily.json", "w", encoding="utf-8") as f:
+         json.dump(data, f, ensure_ascii=False, indent=2)
