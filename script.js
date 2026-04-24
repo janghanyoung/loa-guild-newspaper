@@ -2,43 +2,37 @@ async function load() {
   const res = await fetch("./daily.json", { cache: "no-store" });
   const data = await res.json();
 
-  const dateEl = document.getElementById("date");
-  const errorEl = document.getElementById("error");
-  const noticeEl = document.getElementById("notices");
-  const islandEl = document.getElementById("islands");
-
-  dateEl.textContent = data.date || "날짜 없음";
+  document.getElementById("date").textContent = data.date;
 
   if (data.error) {
-    errorEl.textContent = data.error;
-    errorEl.classList.add("active");
+    document.getElementById("error").textContent = data.error;
     return;
   }
 
+  // 공지
+  const noticeEl = document.getElementById("notices");
   noticeEl.innerHTML = "";
-  (data.notices || []).forEach((notice) => {
+  data.notices.forEach(n => {
     const li = document.createElement("li");
-    li.textContent = notice;
+    li.textContent = n;
     noticeEl.appendChild(li);
   });
 
-  if (!data.notices || data.notices.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "표시할 공지사항이 없습니다.";
-    noticeEl.appendChild(li);
-  }
-
+  // 섬
+  const islandEl = document.getElementById("islands");
   islandEl.innerHTML = "";
-  (data.islands || []).forEach((island) => {
+  data.islands.forEach(i => {
     const li = document.createElement("li");
-    li.textContent = island;
+    li.textContent = i;
     islandEl.appendChild(li);
   });
 
-  if (!data.islands || data.islands.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "오늘 표시된 모험섬이 없습니다.";
-    islandEl.appendChild(li);
+  // 🔥 랜덤 이미지
+  if (data.islandImages && data.islandImages.length > 0) {
+    const img = data.islandImages[
+      Math.floor(Math.random() * data.islandImages.length)
+    ];
+    document.getElementById("islandImage").src = img;
   }
 }
 
