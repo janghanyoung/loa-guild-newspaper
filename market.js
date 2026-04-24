@@ -11,6 +11,7 @@ async function loadMarket() {
 
   const tableBody = document.getElementById('marketTableBody');
   const summary = document.getElementById('marketSummary');
+  const title = document.getElementById('marketTableTitle');
 
   let currentTab = 'engravings';
 
@@ -20,15 +21,23 @@ async function loadMarket() {
 
     const items = data[currentTab] || [];
 
+    title.textContent = currentTab === 'engravings' ? '각인 시세' : currentTab;
+
     items.forEach(item => {
       const tr = document.createElement('tr');
+
+      const deltaClass = item.delta.includes('+')
+        ? 'up'
+        : item.delta.includes('-')
+        ? 'down'
+        : '';
 
       tr.innerHTML = `
         <td>${item.name}</td>
         <td>${item.category}</td>
         <td>${item.price}</td>
         <td>${item.lowest}</td>
-        <td>${item.delta}</td>
+        <td class="${deltaClass}">${item.delta}</td>
         <td>${item.note || ''}</td>
       `;
 
@@ -40,9 +49,9 @@ async function loadMarket() {
     const falling = items.filter(i => i.delta.includes('-')).length;
 
     summary.innerHTML = `
-      <div class="summary-box">총 ${total}개</div>
-      <div class="summary-box">상승 ${rising}</div>
-      <div class="summary-box">하락 ${falling}</div>
+      <div class="summary-box">총 ${total}</div>
+      <div class="summary-box up">상승 ${rising}</div>
+      <div class="summary-box down">하락 ${falling}</div>
     `;
   }
 
