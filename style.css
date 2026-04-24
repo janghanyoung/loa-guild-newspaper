@@ -1,89 +1,71 @@
 body {
   margin: 0;
-  background: #f2f1ed;
-  color: #111;
+  background: #eef1f5;
   font-family: "Noto Sans KR", sans-serif;
 }
 
-.site-wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 20px 60px;
-}
-
-/* ===== 대문 ===== */
-.front-door {
-  position: relative;
-  text-align: center;
-  padding: 80px 20px 60px;
-  background: #ffffff;
-  border: 2px solid #111;
-  margin-bottom: 30px;
-}
-
-.bureau-line {
+.system-topbar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 11px;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+  background: #2f5597;
+  color: white;
+  padding: 10px 20px;
 }
 
-.front-door h1 {
-  margin: 10px 0;
-  font-size: 64px;
-  font-weight: 900;
-  letter-spacing: -2px;
+.system-nav a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
 }
 
-.stamp {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  border: 3px solid red;
-  color: red;
-  padding: 6px 12px;
-  font-weight: bold;
-  transform: rotate(-15deg);
+.dashboard-wrap {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* ===== 3단 ===== */
-.three-column-layout {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   gap: 20px;
 }
 
-.file-card {
-  background: #fff;
-  border: 2px solid #111;
-  padding: 20px;
+.dash-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
 }
 
-.primary-file {
-  border-width: 3px;
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
 }
 
-.dossier-box {
-  border-top: 2px dashed #111;
-  padding-top: 15px;
-}
-
-.section-kicker {
-  font-size: 11px;
-  letter-spacing: 1px;
-}
-
-.notice-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
+.work-item {
+  margin-top: 10px;
 }
 
 .pill-list li {
   display: inline-block;
-  margin: 5px;
-  padding: 6px 10px;
-  border: 1px solid #111;
+  background: #f0f2f5;
+  padding: 5px 8px;
+  margin: 4px;
+  border-radius: 10px;
+}
+
+.progress {
+  height: 6px;
+  background: #ddd;
+  border-radius: 4px;
+}
+
+.progress span {
+  display: block;
+  width: 32%;
+  height: 100%;
+  background: #2f5597;
 }
 
 .youtube-frame {
@@ -98,7 +80,7 @@ body {
 }
 
 @media (max-width: 900px) {
-  .three-column-layout {
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
