@@ -1,17 +1,89 @@
 {
-  "date": "2026-04-24",
+  "date": "2026-04-24 11:28",
   "engravings": [
-    {"name":"원한","category":"전설","price":"12000","lowest":"11800","delta":"+200","note":"수요 높음"},
-    {"name":"저주받은 인형","category":"전설","price":"9800","lowest":"9600","delta":"-150"}
+    {
+      "name": "전설 원한 각인서",
+      "category": "전설",
+      "price": "22골",
+      "lowest": "22골",
+      "delta": "+17",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 아드레날린 각인서",
+      "category": "전설",
+      "price": "11골",
+      "lowest": "11골",
+      "delta": "+4",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 저주받은 인형 각인서",
+      "category": "전설",
+      "price": "3골",
+      "lowest": "1골",
+      "delta": "+1",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 돌격대장 각인서",
+      "category": "전설",
+      "price": "30골",
+      "lowest": "29골",
+      "delta": "-30",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 예리한 둔기 각인서",
+      "category": "전설",
+      "price": "20골",
+      "lowest": "18골",
+      "delta": "-7",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 타격의 대가 각인서",
+      "category": "전설",
+      "price": "19골",
+      "lowest": "13골",
+      "delta": "-8",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 질량 증가 각인서",
+      "category": "전설",
+      "price": "75골",
+      "lowest": "73골",
+      "delta": "-5",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 기습의 대가 각인서",
+      "category": "전설",
+      "price": "3골",
+      "lowest": "3골",
+      "delta": "-8",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 결투의 대가 각인서",
+      "category": "전설",
+      "price": "30골",
+      "lowest": "27골",
+      "delta": "+9",
+      "note": "묶음 1개"
+    },
+    {
+      "name": "전설 안정된 상태 각인서",
+      "category": "전설",
+      "price": "3골",
+      "lowest": "3골",
+      "delta": "-2",
+      "note": "묶음 1개"
+    }
   ],
-  "gems": [
-    {"name":"7레벨 멸화","category":"보석","price":"35000","lowest":"34000","delta":"+500"}
-  ],
-  "materials": [
-    {"name":"명예의 파편","category":"재료","price":"120","lowest":"110","delta":"+10"}
-  ],
-  "etc": [
-    {"name":"페온","category":"기타","price":"100","lowest":"100","delta":"0"}
-  ],
+  "gems": [],
+  "materials": [],
+  "etc": [],
   "error": null
 }

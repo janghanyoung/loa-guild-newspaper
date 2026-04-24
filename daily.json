@@ -1,12 +1,6 @@
 {
   "date": "2026-04-24",
-  "notices": [
-    "알려진 이슈를 안내해 드립니다. (4/23 수정)",
-    "악성코드 감염 예방을 위한 보안 수칙 안내",
-    "모험가 여러분의 계정 보호를 위한 안내",
-    "4월 23일(목) 로스트아크 임시 점검 완료 안내",
-    "4월 23일(목) 로스트아크 임시 점검 안내"
-  ],
+  "notices": [],
   "islands": [
     "블루홀 섬",
     "환각의 섬",
@@ -15,8 +9,21 @@
     "그릇된 욕망의 섬",
     "미지의 섬"
   ],
+  "events": [
+    "카오스 게이트",
+    "필드보스",
+    "고고학 핫타임"
+  ],
+  "youtube": {
+    "title": "오늘의 공략 재생목록",
+    "playlistUrl": "https://www.youtube.com/embed/videoseries?list=PLLeGJe5uPxsoWavCMFR9IlMBAUyP25L_a"
+  },
+  "guildAds": [
+    "오늘도 대환장 길드원 모집 중",
+    "레이드 지각 시 공개 처형",
+    "출석률 0%도 환영 (대신 욕은 먹음)"
+  ],
   "islandImages": [
-    "assets/islands/images1",
     "assets/islands/artwork_107_파멸의성채내부_01.jpg",
     "assets/islands/island-01.jpg"
   ],
