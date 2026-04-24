@@ -9,37 +9,42 @@
 <body class="home-page">
   <main class="site-wrap">
     <header class="front-door">
-      <p class="front-label">LOST ARK GUILD</p>
+      <div class="bureau-line">
+        <span>GUILD OPERATIONS ARCHIVE</span>
+        <span>ARKRASIA INCIDENT DESK</span>
+      </div>
+      <p class="front-label">공식 길드 상황판</p>
       <h1>오늘도 대환장</h1>
       <p class="front-subtitle">길드 공지 · 오늘의 모험섬 · 이벤트 · 공략 · 벼락장터</p>
       <div class="front-meta">
-        <span>오늘의 갱신일</span>
+        <span>문서 갱신일</span>
         <strong id="date">날짜 로딩 중</strong>
       </div>
+      <div class="stamp">CONFIRMED</div>
     </header>
 
     <div id="error" class="error"></div>
 
     <section class="three-column-layout" aria-label="길드 홈페이지 주요 정보">
-      <aside class="column-card">
+      <aside class="column-card file-card">
         <section id="notice" class="content-block">
-          <p class="section-kicker">NOTICE</p>
+          <p class="section-kicker">CASE 01 / NOTICE</p>
           <h2>공지사항</h2>
           <p class="section-lead">로스트아크 공식 공지 최신 소식을 확인하세요.</p>
           <ul id="notices" class="notice-list clean-list"></ul>
         </section>
 
-        <section class="content-block compact-block">
-          <p class="section-kicker">MARKET</p>
+        <section class="content-block compact-block dossier-box">
+          <p class="section-kicker">CASE 02 / MARKET</p>
           <h2>벼락장터</h2>
           <p>각인 · 보석 · 재료 시세는 별도 시세판에서 확인합니다.</p>
           <a class="text-link" href="market.html">시세판 보러가기 →</a>
         </section>
       </aside>
 
-      <section class="column-card main-column">
+      <section class="column-card main-column file-card primary-file">
         <section id="island-section" class="content-block">
-          <p class="section-kicker">DAILY ISLAND</p>
+          <p class="section-kicker">CASE 03 / DAILY ISLAND</p>
           <h2>오늘의 모험섬</h2>
           <div class="island-frame">
             <img id="islandImage" class="island-image" alt="오늘의 모험섬 이미지" />
@@ -47,16 +52,16 @@
           <ul id="islands" class="island-list clean-list pill-list"></ul>
         </section>
 
-        <section id="events-section" class="content-block">
-          <p class="section-kicker">EVENT</p>
+        <section id="events-section" class="content-block dossier-box">
+          <p class="section-kicker">CASE 04 / EVENT</p>
           <h2>오늘의 일정</h2>
           <ul id="events" class="event-list clean-list pill-list"></ul>
         </section>
       </section>
 
-      <aside class="column-card">
+      <aside class="column-card file-card">
         <section id="guide" class="content-block">
-          <p class="section-kicker">GUIDE</p>
+          <p class="section-kicker">CASE 05 / GUIDE</p>
           <h2>오늘의 공략</h2>
           <p id="youtubeTitle" class="section-lead"></p>
           <div class="youtube-frame">
@@ -71,8 +76,8 @@
           </div>
         </section>
 
-        <section class="content-block guild-notice-block">
-          <p class="section-kicker">GUILD</p>
+        <section class="content-block guild-notice-block dossier-box">
+          <p class="section-kicker">CASE 06 / GUILD</p>
           <h2>길드 안내</h2>
           <ul id="guild_ads" class="guild-ad-list clean-list"></ul>
         </section>
