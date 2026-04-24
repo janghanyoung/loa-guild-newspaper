@@ -1,55 +1,45 @@
 async function load() {
-  const res = await fetch("./daily.json");
+  const res = await fetch("./daily.json", { cache: "no-store" });
   const data = await res.json();
 
-  document.getElementById("date").textContent = data.date;
+  const dateEl = document.getElementById("date");
+  const errorEl = document.getElementById("error");
+  const noticeEl = document.getElementById("notices");
+  const islandEl = document.getElementById("islands");
+
+  dateEl.textContent = data.date || "날짜 없음";
 
   if (data.error) {
-    document.getElementById("error").textContent = data.error;
-    return;async function load() {
-  const res = await fetch("./daily.json");
-  const data = await res.json();
-
-  document.getElementById("date").textContent = data.date;
-
-  if (data.error) {
-    document.getElementById("error").textContent = data.error;
+    errorEl.textContent = data.error;
+    errorEl.classList.add("active");
     return;
   }
 
-  const noticeEl = document.getElementById("notices");
   noticeEl.innerHTML = "";
-  data.notices.forEach(n => {
+  (data.notices || []).forEach((notice) => {
     const li = document.createElement("li");
-    li.textContent = n;
+    li.textContent = notice;
     noticeEl.appendChild(li);
   });
 
-  const islandEl = document.getElementById("islands");
-  islandEl.innerHTML = "";
-  data.islands.forEach(i => {
+  if (!data.notices || data.notices.length === 0) {
     const li = document.createElement("li");
-    li.textContent = i;
-    islandEl.appendChild(li);
-  });
-}
-
-load();
+    li.textContent = "표시할 공지사항이 없습니다.";
+    noticeEl.appendChild(li);
   }
 
-  const noticeEl = document.getElementById("notices");
-  data.notices.forEach(n => {
+  islandEl.innerHTML = "";
+  (data.islands || []).forEach((island) => {
     const li = document.createElement("li");
-    li.textContent = n;
-    noticeEl.appendChild(li);
-  });
-
-  const islandEl = document.getElementById("islands");
-  data.islands.forEach(i => {
-    const li = document.createElement("li");
-    li.textContent = i;
+    li.textContent = island;
     islandEl.appendChild(li);
   });
+
+  if (!data.islands || data.islands.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "오늘 표시된 모험섬이 없습니다.";
+    islandEl.appendChild(li);
+  }
 }
 
 load();
