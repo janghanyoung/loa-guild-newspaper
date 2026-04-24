@@ -37,31 +37,44 @@ def fetch_notices():
     res = requests.get("https://m-lostark.game.onstove.com/News/Notice/List")
     soup = BeautifulSoup(res.text, "html.parser")
 
-    return [a.text.strip() for a in soup.select(".list__title")][:5]
+    result = []
+    for a in soup.select(".list__item")[:5]:
+        title = a.select_one(".list__title").text.strip()
+        link = "https://m-lostark.game.onstove.com" + a.select_one("a")["href"]
+        result.append({"title": title, "url": link})
+
+    return result
 
 
 def fetch_images():
     path = Path("assets/islands")
-    return [f"assets/islands/{f.name}" for f in path.iterdir()]
+    allowed = {".png", ".jpg", ".jpeg", ".webp"}
+
+    return [
+        f"assets/islands/{f.name}"
+        for f in path.iterdir()
+        if f.suffix.lower() in allowed
+    ]
 
 
 def build():
-    try:
-        return {
-            "date": datetime.now(TIMEZONE).strftime("%Y-%m-%d"),
-            "notices": fetch_notices(),
-            "islands": fetch_islands(),
-            "islandImages": fetch_images(),
-            "error": None
-        }
-    except Exception as e:
-        return {
-            "date": "",
-            "notices": [],
-            "islands": [],
-            "islandImages": [],
-            "error": str(e)
-        }
+    return {
+        "date": datetime.now(TIMEZONE).strftime("%Y-%m-%d"),
+        "notices": fetch_notices(),
+        "islands": fetch_islands(),
+        "events": ["카오스 게이트", "필드보스", "고고학 핫타임"],
+        "youtube": {
+            "title": "오늘의 공략 재생목록",
+            "playlistUrl": "https://www.youtube.com/embed/videoseries?list=PLxxxx"
+        },
+        "guildAds": [
+            "오늘도 대환장 길드원 모집 중",
+            "레이드 지각 시 공개 처형",
+            "출석률 0%도 환영 (대신 욕은 먹음)"
+        ],
+        "islandImages": fetch_images(),
+        "error": None
+    }
 
 
 if __name__ == "__main__":
