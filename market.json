@@ -1,11 +1,11 @@
 {
-  "date": "2026-04-24 11:28",
+  "date": "2026-04-24 11:34",
   "engravings": [
     {
       "name": "전설 원한 각인서",
       "category": "전설",
       "price": "22골",
-      "lowest": "22골",
+      "lowest": "20골",
       "delta": "+17",
       "note": "묶음 1개"
     },
@@ -13,7 +13,7 @@
       "name": "전설 아드레날린 각인서",
       "category": "전설",
       "price": "11골",
-      "lowest": "11골",
+      "lowest": "10골",
       "delta": "+4",
       "note": "묶음 1개"
     },
@@ -29,7 +29,7 @@
       "name": "전설 돌격대장 각인서",
       "category": "전설",
       "price": "30골",
-      "lowest": "29골",
+      "lowest": "27골",
       "delta": "-30",
       "note": "묶음 1개"
     },
@@ -53,7 +53,7 @@
       "name": "전설 질량 증가 각인서",
       "category": "전설",
       "price": "75골",
-      "lowest": "73골",
+      "lowest": "70골",
       "delta": "-5",
       "note": "묶음 1개"
     },
@@ -76,9 +76,9 @@
     {
       "name": "전설 안정된 상태 각인서",
       "category": "전설",
-      "price": "3골",
-      "lowest": "3골",
-      "delta": "-2",
+      "price": "6골",
+      "lowest": "5골",
+      "delta": "+1",
       "note": "묶음 1개"
     }
   ],
