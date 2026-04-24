@@ -1,420 +1,68 @@
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  min-height: 100vh;
-  background: radial-gradient(circle at top left, #26365f 0, transparent 32%), #0b1020;
-  color: #e8edf8;
-  font-family: Arial, "Noto Sans KR", sans-serif;
+  background: #f5f6f8;
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
 }
 
-a {
-  color: inherit;
-}
-
-.guild-home-page {
-  padding: 28px;
-}
-
-.guild-shell {
-  width: min(1240px, 100%);
+.site-wrap {
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 40px 20px 60px;
 }
 
-.guild-topbar {
-  position: sticky;
-  top: 16px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 14px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 22px;
-  background: rgba(9, 14, 29, 0.82);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+.front-door {
+  text-align: center;
+  padding: 80px 20px 60px;
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 30px;
 }
 
-.guild-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 70px;
-  height: 36px;
-  padding: 0 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #8bd6ff, #8f7bff);
-  color: #06101f;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.guild-brand strong {
-  font-size: 18px;
-  letter-spacing: -0.02em;
-}
-
-.guild-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.guild-nav-links a {
-  padding: 9px 12px;
-  border-radius: 999px;
-  color: #b9c4d8;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.guild-nav-links a:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-.guild-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 24px;
-  margin-top: 28px;
-  padding: 42px;
-  min-height: 380px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 34px;
-  background:
-    linear-gradient(135deg, rgba(17, 27, 52, 0.94), rgba(16, 23, 44, 0.82)),
-    url("assets/islands/artwork_107_파멸의성채내부_01.jpg") center/cover;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-}
-
-.hero-copy {
-  align-self: end;
-  max-width: 720px;
-}
-
-.eyebrow,
-.section-kicker,
-.quick-card span {
-  margin: 0 0 10px;
-  color: #83d7ff;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.guild-hero h1 {
-  margin: 0;
-  max-width: 720px;
-  font-size: clamp(42px, 7vw, 82px);
-  line-height: 0.98;
-  letter-spacing: -0.08em;
-}
-
-.hero-lead {
-  max-width: 640px;
-  margin: 22px 0 0;
-  color: #c8d3e8;
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 28px;
-  flex-wrap: wrap;
-}
-
-.primary-button,
-.ghost-button,
-.market-link,
-.guild-ad-list a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 999px;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.primary-button {
-  background: #8bd6ff;
-  color: #07111f;
-}
-
-.ghost-button {
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #eef5ff;
-}
-
-.hero-status-card {
-  align-self: end;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 26px;
-  background: rgba(5, 10, 21, 0.7);
-  backdrop-filter: blur(14px);
-}
-
-.hero-status-card span {
-  display: block;
-  color: #94a3b8;
-  font-size: 13px;
-}
-
-.hero-status-card strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 30px;
-}
-
-.hero-status-card p {
-  margin: 14px 0 0;
-  color: #aebbd0;
-  line-height: 1.6;
-}
-
-.error {
-  margin: 18px 0;
-  color: #fecaca;
+.front-door h1 {
+  margin: 10px 0;
+  font-size: 64px;
   font-weight: 800;
 }
 
-.quick-grid {
+.three-column-layout {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 20px;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 20px;
 }
 
-.quick-card,
-.home-card {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 26px;
-  background: rgba(14, 22, 42, 0.88);
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.22);
-}
-
-.quick-card {
+.column-card {
+  background: #fff;
+  border-radius: 16px;
   padding: 20px;
 }
 
-.quick-card strong {
-  display: block;
-  font-size: 21px;
-  letter-spacing: -0.04em;
+.notice-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.quick-card p {
-  margin: 10px 0 0;
-  color: #aebbd0;
-  line-height: 1.55;
-}
-
-.home-layout {
-  display: grid;
-  grid-template-columns: 1.05fr 1.35fr 0.9fr;
-  gap: 18px;
-  margin-top: 18px;
-  align-items: start;
-}
-
-.home-card {
-  padding: 24px;
-  overflow: hidden;
-}
-
-.notice-card,
-.youtube-card,
-.guild-card {
-  grid-row: span 2;
-}
-
-.guild-card {
-  grid-column: span 2;
-}
-
-.card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-
-.card-head h2,
-.home-card h2 {
-  margin: 0;
-  font-size: 28px;
-  letter-spacing: -0.06em;
-}
-
-.section-lead,
-.home-card p {
-  color: #aebbd0;
-  line-height: 1.65;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.notice-list li,
-.island-list li,
-.event-list li {
-  padding: 13px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-}
-
-.notice-list a {
-  color: #e8edf8;
-  text-decoration: none;
-}
-
-.notice-list a:hover {
-  color: #8bd6ff;
-}
-
-.island-frame {
-  margin: 16px 0;
-  border-radius: 22px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.island-image {
-  display: block;
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
+.pill-list li {
+  display: inline-block;
+  margin: 5px 5px 0 0;
+  padding: 6px 10px;
+  background: #f0f2f5;
+  border-radius: 20px;
 }
 
 .youtube-frame {
   position: relative;
-  width: 100%;
   padding-top: 56.25%;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #050914;
 }
 
 .youtube-frame iframe {
   position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.market-card {
-  background: linear-gradient(135deg, rgba(42, 29, 81, 0.95), rgba(11, 18, 35, 0.95));
-}
-
-.market-link,
-.guild-ad-list a {
-  margin-top: 12px;
-  background: rgba(139, 214, 255, 0.14);
-  border: 1px solid rgba(139, 214, 255, 0.32);
-  color: #bdeaff;
-}
-
-.guild-ad-list li {
-  padding: 18px;
-  margin-bottom: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.045);
-  white-space: pre-line;
-}
-
-.guild-ad-list strong {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 20px;
-}
-
-.guild-ad-list img {
-  display: block;
-  width: 100%;
-  max-height: 360px;
-  object-fit: cover;
-  margin: 12px 0;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-/* ==============================
-   Market page only
-   ============================== */
-.market-body-page {
-  margin: 0;
-  padding: 0;
-  background: #0e1117;
-  color: #e5e7eb;
-  font-family: Arial, "Noto Sans KR", sans-serif;
-}
-
-@media (max-width: 980px) {
-  .guild-home-page {
-    padding: 16px;
-  }
-
-  .guild-topbar,
-  .guild-hero {
-    position: static;
-  }
-
-  .guild-hero,
-  .home-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .quick-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .notice-card,
-  .youtube-card,
-  .guild-card {
-    grid-column: auto;
-    grid-row: auto;
-  }
-}
-
-@media (max-width: 640px) {
-  .guild-topbar {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .guild-hero {
-    padding: 28px;
-  }
-
-  .quick-grid {
+@media (max-width: 900px) {
+  .three-column-layout {
     grid-template-columns: 1fr;
   }
 }
