@@ -67,3 +67,37 @@ li {
   color: red;
   font-weight: bold;
 }
+.footer-market {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 3px double #8f6840;
+}
+
+.footer-title {
+  text-align: center;
+  font-size: 32px;
+  margin: 0 0 14px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.footer-card {
+  min-height: 140px;
+  border: 2px solid #8f6840;
+  background: rgba(255,255,255,.16);
+  padding: 14px;
+}
+
+.footer-card h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.footer-card p {
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
