@@ -9,7 +9,7 @@ async function load() {
     return;
   }
 
-  // 공지 (링크 지원)
+  // 공지
   const noticeEl = document.getElementById("notices");
   noticeEl.innerHTML = "";
   data.notices.forEach(n => {
@@ -48,13 +48,48 @@ async function load() {
     document.getElementById("youtubeTitle").textContent = data.youtube.title;
   }
 
-  // 길드 광고
+  // 🔥 길드 광고 (확장형)
   const adEl = document.getElementById("guildAds");
   if (adEl && data.guildAds) {
     adEl.innerHTML = "";
-    data.guildAds.forEach(a => {
+
+    data.guildAds.forEach(item => {
       const li = document.createElement("li");
-      li.textContent = a;
+
+      // 객체형 지원
+      if (typeof item === "object") {
+        if (item.title) {
+          const title = document.createElement("strong");
+          title.textContent = item.title;
+          li.appendChild(title);
+        }
+
+        if (item.image) {
+          const img = document.createElement("img");
+          img.src = item.image;
+          img.style.width = "100%";
+          img.style.margin = "8px 0";
+          li.appendChild(img);
+        }
+
+        if (item.text) {
+          const p = document.createElement("p");
+          p.textContent = item.text;
+          p.style.whiteSpace = "pre-line";
+          li.appendChild(p);
+        }
+
+        if (item.url) {
+          const a = document.createElement("a");
+          a.href = item.url;
+          a.target = "_blank";
+          a.textContent = "바로가기";
+          li.appendChild(a);
+        }
+      } else {
+        li.textContent = item;
+      }
+
       adEl.appendChild(li);
     });
   }
