@@ -9,7 +9,6 @@ async function load() {
     return;
   }
 
-  // 공지
   const noticeEl = document.getElementById("notices");
   noticeEl.innerHTML = "";
   data.notices.forEach(n => {
@@ -22,7 +21,6 @@ async function load() {
     noticeEl.appendChild(li);
   });
 
-  // 섬
   const islandEl = document.getElementById("islands");
   islandEl.innerHTML = "";
   data.islands.forEach(i => {
@@ -31,7 +29,6 @@ async function load() {
     islandEl.appendChild(li);
   });
 
-  // 이벤트
   const eventEl = document.getElementById("events");
   if (eventEl && data.events) {
     eventEl.innerHTML = "";
@@ -42,21 +39,18 @@ async function load() {
     });
   }
 
-  // 유튜브
   if (data.youtube) {
     document.getElementById("youtubeFrame").src = data.youtube.playlistUrl;
     document.getElementById("youtubeTitle").textContent = data.youtube.title;
   }
 
-  // 🔥 길드 광고 (확장형)
-  const adEl = document.getElementById("guildAds");
+  const adEl = document.getElementById("guildAds") || document.getElementById("guild_ads");
   if (adEl && data.guildAds) {
     adEl.innerHTML = "";
 
     data.guildAds.forEach(item => {
       const li = document.createElement("li");
 
-      // 객체형 지원
       if (typeof item === "object") {
         if (item.title) {
           const title = document.createElement("strong");
@@ -67,15 +61,13 @@ async function load() {
         if (item.image) {
           const img = document.createElement("img");
           img.src = item.image;
-          img.style.width = "100%";
-          img.style.margin = "8px 0";
+          img.alt = item.title || "길드 광고 이미지";
           li.appendChild(img);
         }
 
         if (item.text) {
           const p = document.createElement("p");
           p.textContent = item.text;
-          p.style.whiteSpace = "pre-line";
           li.appendChild(p);
         }
 
@@ -94,7 +86,6 @@ async function load() {
     });
   }
 
-  // 이미지
   if (data.islandImages && data.islandImages.length > 0) {
     const img = data.islandImages[Math.floor(Math.random() * data.islandImages.length)];
     document.getElementById("islandImage").src = img;
