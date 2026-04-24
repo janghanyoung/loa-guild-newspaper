@@ -29,6 +29,6 @@ jobs:
       - run: |
           git config user.name "bot"
           git config user.email "bot@bot.com"
-          git add public/daily.json
+          git add daily.json
           git commit -m "update daily json" || echo "no changes"
           git push
