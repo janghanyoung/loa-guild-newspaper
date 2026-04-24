@@ -2,75 +2,82 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0" />
   <title>길드 신문</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="paper">
-    <header class="top-ad-row">
-      <section class="ad-box">
-        <h2>오늘도 대환장</h2>
-        <p>길드 생존 확인 전문지</p>
-      </section>
-
-      <section class="masthead">
-        <h1>길드 신문</h1>
-        <p>공지 · 모험 · 섬</p>
-      </section>
-
-      <section class="ad-box">
-        <h2>놓치면 손해</h2>
-        <p>오늘 정보 한눈에</p>
-      </section>
+    <header class="masthead">
+      <div class="masthead-line">
+        <span>ARKRASIA GUILD PRESS</span>
+        <span id="date">날짜 로딩 중</span>
+        <span>오늘도 대환장 편집부</span>
+      </div>
+      <h1>길드 신문</h1>
+      <p>공지 · 모험섬 · 이벤트 · 공략 · 벼락장터</p>
     </header>
-
-    <section class="meta-bar">
-      <span>NO.001</span>
-      <span id="date"></span>
-      <span>길드 정보국</span>
-    </section>
 
     <div id="error" class="error"></div>
 
     <section class="main-grid">
-      <article class="headline-article">
-        <h2>📢 공지사항</h2>
-        <ul id="notices"></ul>
+      <article class="panel notices-panel">
+        <p class="section-kicker">NOTICE BOARD</p>
+        <h2>공지사항</h2>
+        <p class="section-lead">로스트아크 공식 공지 최신 소식을 링크로 확인합니다.</p>
+        <ul id="notices" class="notice-list"></ul>
       </article>
 
-      <aside class="side-article">
-        <h2>🏝 오늘의 모험섬</h2>
+      <article class="panel center-panel">
+        <section class="island-section">
+          <p class="section-kicker">ADVENTURE ISLAND</p>
+          <h2>오늘의 모험섬</h2>
+          <div class="island-frame">
+            <img id="islandImage" class="island-image" alt="오늘의 모험섬 이미지" />
+          </div>
+          <ul id="islands" class="island-list"></ul>
+        </section>
 
-        <div class="island-frame">
-          <img id="islandImage" class="island-image" alt="오늘의 모험섬 이미지" />
+        <div class="ornament-divider">◆ ◆ ◆</div>
+
+        <section class="event-section">
+          <p class="section-kicker">EVENT BRIEF</p>
+          <h2>이벤트</h2>
+          <ul id="events" class="event-list"></ul>
+        </section>
+      </article>
+
+      <article class="panel youtube-panel">
+        <p class="section-kicker">YOUTUBE GUIDE</p>
+        <h2>오늘의 공략</h2>
+        <p id="youtubeTitle" class="section-lead">공략 재생목록</p>
+        <div class="youtube-frame">
+          <iframe
+            id="youtubeFrame"
+            title="공략 재생목록"
+            src=""
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
         </div>
-
-        <ul id="islands"></ul>
-      </aside>
+        <p class="youtube-note">재생목록은 config 없이 script.js에서 관리합니다.</p>
+      </article>
     </section>
 
-    <section class="footer-market">
-      <h2 class="footer-title">⚡ 벼락장터 ⚡</h2>
+    <section class="bottom-grid">
+      <article class="bottom-card market-card">
+        <p class="section-kicker">THUNDER MARKET</p>
+        <h2>벼락장터</h2>
+        <p>각인 · 보석 · 재료 시세는 별도 시세판에서 확인합니다.</p>
+        <a class="market-link" href="market.html">시세판 보러가기 →</a>
+      </article>
 
-      <div class="footer-grid">
-        <article class="footer-card">
-          <h3>⚡ 모험섬 소식</h3>
-          <p>오늘 열린 섬은 확인 즉시 출항하십시오.</p>
-          <p>늦으면 보상도 낭만도 없습니다.</p>
-        </article>
-
-        <article class="footer-card">
-          <h3>📢 길드 광고</h3>
-          <p>오늘도 대환장 정상 영업 중.</p>
-          <p>레이드 · 모험섬 · 잡담 · 헛소리 모두 환영.</p>
-        </article>
-
-        <article class="footer-card">
-          <h3>🪙 시세판 준비 중</h3>
-          <p>각인, 보석, 재료 시세는 다음 호부터 자동 집계 예정.</p>
-          <p>골드 지갑은 스스로 지키십시오.</p>
-        </article>
-      </div>
+      <article class="bottom-card guild-card">
+        <p class="section-kicker">GUILD AD</p>
+        <h2>길드 광고</h2>
+        <ul id="guildAds" class="guild-ad-list"></ul>
+      </article>
     </section>
   </main>
 
