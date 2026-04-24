@@ -1,0 +1,17 @@
+{
+  "date": "2026-04-24",
+  "engravings": [
+    {"name":"원한","category":"전설","price":"12000","lowest":"11800","delta":"+200","note":"수요 높음"},
+    {"name":"저주받은 인형","category":"전설","price":"9800","lowest":"9600","delta":"-150"}
+  ],
+  "gems": [
+    {"name":"7레벨 멸화","category":"보석","price":"35000","lowest":"34000","delta":"+500"}
+  ],
+  "materials": [
+    {"name":"명예의 파편","category":"재료","price":"120","lowest":"110","delta":"+10"}
+  ],
+  "etc": [
+    {"name":"페온","category":"기타","price":"100","lowest":"100","delta":"0"}
+  ],
+  "error": null
+}
