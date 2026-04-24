@@ -6,59 +6,68 @@
   <title>오늘도 대환장</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="home-page">
-  <aside class="intranet-sidebar">
-    <div class="sidebar-brand"><span class="agency-emblem"></span><strong>오늘도 대환장</strong><small>Guild Intranet</small></div>
-    <nav class="sidebar-nav">
-      <button class="page-nav active" data-page="dashboard">📊 대시보드</button>
-      <button class="page-nav" data-page="raids">⚔️ 레이드</button>
-      <button class="page-nav" data-page="notices">📢 공지/일정</button>
-      <button class="page-nav" data-page="guides">🎬 공략/장터</button>
-    </nav>
-  </aside>
+<body class="home-page auth-required">
+  <section id="loginLanding" class="login-landing">
+    <div class="login-copy">
+      <span class="landing-badge">GUILD INTRANET</span>
+      <h1>오늘도 대환장</h1>
+      <p>레이드 신청, 모험섬 일정, 길드 공지를 한 곳에서 확인하는 길드 전용 인트라넷입니다.</p>
+      <div class="landing-stats">
+        <div><strong>8인</strong><span>자동 파티</span></div>
+        <div><strong>2서폿</strong><span>부족 경고</span></div>
+        <div><strong>실시간</strong><span>신청 공유</span></div>
+      </div>
+    </div>
+    <section id="loginPanel" class="login-panel">
+      <div class="card-title-row"><h2>🔐 길드원 로그인</h2><span class="count-badge">Supabase</span></div>
+      <p class="section-lead">한글 아이디와 비밀번호로 접속합니다.</p>
+      <form id="authForm" class="auth-form">
+        <input id="guildId" type="text" placeholder="한글 아이디 예: 모코코감자" required />
+        <input id="guildPassword" type="password" placeholder="비밀번호 6자 이상" minlength="6" required />
+        <div class="auth-actions"><button id="loginButton" type="submit">로그인</button><button id="signupButton" type="button">회원가입</button></div>
+      </form>
+      <p id="authMessage" class="auth-message"></p>
+    </section>
+  </section>
 
-  <section class="intranet-main">
-    <header class="system-topbar">
-      <div><strong id="pageTitle">대시보드</strong><span>오늘도 대환장 관리국</span></div>
-      <div class="system-status"><span>운영도 : 32%</span></div>
-      <div id="userChip" class="user-chip">👤 로그아웃</div>
-    </header>
+  <section id="intranetApp" class="intranet-app" hidden>
+    <aside class="intranet-sidebar">
+      <div class="sidebar-brand"><span class="agency-emblem"></span><strong>오늘도 대환장</strong><small>Guild Intranet</small></div>
+      <nav class="sidebar-nav">
+        <button class="page-nav active" data-page="dashboard">📊 대시보드</button>
+        <button class="page-nav" data-page="raids">⚔️ 레이드</button>
+        <button class="page-nav" data-page="notices">📢 공지/일정</button>
+        <button class="page-nav" data-page="guides">🎬 공략/장터</button>
+      </nav>
+    </aside>
 
-    <main class="dashboard-wrap">
-      <section id="loginPanel" class="dash-card login-card">
-        <div class="card-title-row"><h2>🔐 길드원 로그인</h2><span class="count-badge">Supabase Auth</span></div>
-        <p class="section-lead">한글 아이디와 비밀번호로 가입/로그인합니다.</p>
-        <form id="authForm" class="auth-form">
-          <input id="guildId" type="text" placeholder="한글 아이디 예: 모코코감자" required />
-          <input id="guildPassword" type="password" placeholder="비밀번호 6자 이상" minlength="6" required />
-          <div class="auth-actions"><button id="loginButton" type="submit">로그인</button><button id="signupButton" type="button">회원가입</button></div>
-        </form>
-        <p id="authMessage" class="auth-message"></p>
-      </section>
+    <section class="intranet-main">
+      <header class="system-topbar">
+        <div><strong id="pageTitle">대시보드</strong><span>오늘도 대환장 관리국</span></div>
+        <div class="system-status"><span>운영도 : 32%</span></div>
+        <div id="userChip" class="user-chip">👤 로그아웃</div>
+      </header>
 
-      <section class="app-page active" data-page="dashboard">
-        <div class="dashboard-grid">
-          <article class="dash-card status-card"><div class="card-title-row"><h2>📊 길드 현황</h2><span class="count-badge">오늘 진행 중</span></div><div class="status-grid"><div><span>공지</span><strong>3건</strong></div><div><span>모험섬</span><strong>6건</strong></div><div><span>이벤트</span><strong>3건</strong></div><div><span>공략</span><strong>1건</strong></div><div><span>레이드</span><strong id="raidTotalCount">0건</strong></div><div><span>길드</span><strong>정상</strong></div></div></article>
-          <article class="dash-card work-card"><div class="card-title-row"><h2>🚨 실시간 대기 업무</h2><button class="market-button page-jump" data-page="raids">레이드 보기</button></div><section id="island-section" class="work-item featured-work"><div><span class="green-tag">🏝️ 모험섬</span><h3>오늘의 모험섬</h3><ul id="islands" class="island-list clean-list pill-list"></ul></div><div class="island-frame"><img id="islandImage" class="island-image" alt="오늘의 모험섬 이미지" /></div></section><section id="events-section" class="work-item"><span class="green-tag">🗓️ 일정</span><h3>오늘의 일정</h3><ul id="events" class="event-list clean-list pill-list"></ul></section></article>
-          <article class="dash-card profile-card"><h2>👤 개인 정보</h2><dl><dt>이름</dt><dd id="profileName">로그아웃</dd><dt>소속</dt><dd>오늘도 대환장</dd><dt>근무상태</dt><dd id="profileStatus">인증 필요</dd></dl><div class="sanity-row"><span>정신운영도</span><strong>32%</strong></div><div class="progress"><span></span></div><button id="logoutButton" class="market-button" type="button">로그아웃</button></article>
-        </div>
-      </section>
+      <main class="dashboard-wrap">
+        <section class="app-page active" data-page="dashboard">
+          <div class="dashboard-grid">
+            <article class="dash-card status-card"><div class="card-title-row"><h2>📊 길드 현황</h2><span class="count-badge">오늘 진행 중</span></div><div class="status-grid"><div><span>공지</span><strong>3건</strong></div><div><span>모험섬</span><strong>6건</strong></div><div><span>이벤트</span><strong>3건</strong></div><div><span>공략</span><strong>1건</strong></div><div><span>레이드</span><strong id="raidTotalCount">0건</strong></div><div><span>길드</span><strong>정상</strong></div></div></article>
+            <article class="dash-card work-card"><div class="card-title-row"><h2>🚨 실시간 대기 업무</h2><button class="market-button page-jump" data-page="raids">레이드 보기</button></div><section id="island-section" class="work-item featured-work"><div><span class="green-tag">🏝️ 모험섬</span><h3>오늘의 모험섬</h3><ul id="islands" class="island-list clean-list pill-list"></ul></div><div class="island-frame"><img id="islandImage" class="island-image" alt="오늘의 모험섬 이미지" /></div></section><section id="events-section" class="work-item"><span class="green-tag">🗓️ 일정</span><h3>오늘의 일정</h3><ul id="events" class="event-list clean-list pill-list"></ul></section></article>
+            <article class="dash-card profile-card"><h2>👤 개인 정보</h2><dl><dt>이름</dt><dd id="profileName">로그아웃</dd><dt>소속</dt><dd>오늘도 대환장</dd><dt>근무상태</dt><dd id="profileStatus">인증 필요</dd></dl><div class="sanity-row"><span>정신운영도</span><strong>32%</strong></div><div class="progress"><span></span></div><button id="logoutButton" class="market-button" type="button">로그아웃</button></article>
+          </div>
+        </section>
 
-      <section class="app-page" data-page="raids">
-        <div class="raid-page-grid">
-          <article id="raid-section" class="dash-card raid-card"><div class="card-title-row"><h2>⚔️ 레이드 신청 접수처</h2><span id="raidModeBadge" class="count-badge">로그인 필요</span></div><form id="raidForm" class="raid-form"><input id="raidName" type="text" placeholder="닉네임" required /><select id="raidClass" required><option value="">직업 선택</option><option>디스트로이어</option><option>워로드</option><option>버서커</option><option>홀리나이트</option><option>슬레이어</option><option>배틀마스터</option><option>인파이터</option><option>기공사</option><option>창술사</option><option>스트라이커</option><option>브레이커</option><option>데빌헌터</option><option>블래스터</option><option>호크아이</option><option>스카우터</option><option>건슬링어</option><option>바드</option><option>서머너</option><option>아르카나</option><option>소서리스</option><option>데모닉</option><option>블레이드</option><option>리퍼</option><option>소울이터</option><option>도화가</option><option>기상술사</option><option>환수사</option></select><select id="raidType" required><option value="">레이드 선택</option><option>발탄</option><option>비아키스</option><option>쿠크세이튼</option><option>아브렐슈드</option><option>일리아칸</option><option>카멘</option><option>에키드나</option><option>베히모스</option><option>아르모체</option></select><input id="raidTime" type="text" placeholder="희망 시간 예: 오늘 21:00" required /><button type="submit">신청 접수</button></form><ul id="raidList" class="raid-list clean-list"></ul></article>
-          <article class="dash-card party-card"><div class="card-title-row"><h2>🧩 자동 파티 구성</h2><span class="count-badge">8인 / 서폿 2 기준</span></div><div id="partyList" class="party-list"></div></article>
-        </div>
-      </section>
+        <section class="app-page" data-page="raids">
+          <div class="raid-page-grid">
+            <article id="raid-section" class="dash-card raid-card"><div class="card-title-row"><h2>⚔️ 레이드 신청 접수처</h2><span id="raidModeBadge" class="count-badge">로그인 필요</span></div><form id="raidForm" class="raid-form"><input id="raidName" type="text" placeholder="닉네임" required /><select id="raidClass" required><option value="">직업 선택</option><option>디스트로이어</option><option>워로드</option><option>버서커</option><option>홀리나이트</option><option>슬레이어</option><option>배틀마스터</option><option>인파이터</option><option>기공사</option><option>창술사</option><option>스트라이커</option><option>브레이커</option><option>데빌헌터</option><option>블래스터</option><option>호크아이</option><option>스카우터</option><option>건슬링어</option><option>바드</option><option>서머너</option><option>아르카나</option><option>소서리스</option><option>데모닉</option><option>블레이드</option><option>리퍼</option><option>소울이터</option><option>도화가</option><option>기상술사</option><option>환수사</option></select><select id="raidType" required><option value="">레이드 선택</option><option>발탄</option><option>비아키스</option><option>쿠크세이튼</option><option>아브렐슈드</option><option>일리아칸</option><option>카멘</option><option>에키드나</option><option>베히모스</option><option>아르모체</option></select><input id="raidTime" type="text" placeholder="희망 시간 예: 오늘 21:00" required /><button type="submit">신청 접수</button></form><ul id="raidList" class="raid-list clean-list"></ul></article>
+            <article class="dash-card party-card"><div class="card-title-row"><h2>🧩 자동 파티 구성</h2><span class="count-badge">8인 / 서폿 2 기준</span></div><div id="partyList" class="party-list"></div></article>
+          </div>
+        </section>
 
-      <section class="app-page" data-page="notices">
-        <div class="dashboard-grid"><article class="dash-card schedule-card"><div class="card-title-row"><h2>📅 주요 일정</h2></div><div class="today-event"><div class="time-box"><span>오늘</span><strong id="date">로딩</strong></div><div><strong>오늘도 대환장 상황판</strong><p>공지 · 모험섬 · 이벤트 · 공략 확인</p></div></div><section id="notice" class="mini-section"><h3>📢 공지사항</h3><ul id="notices" class="notice-list clean-list"></ul></section></article><article class="dash-card guild-notice-card"><h2>📋 길드 안내</h2><ul id="guild_ads" class="guild-ad-list clean-list"></ul></article></div>
-      </section>
-
-      <section class="app-page" data-page="guides">
-        <div class="dashboard-grid"><article id="guide" class="dash-card guide-card"><h2>🎬 오늘의 공략</h2><p id="youtubeTitle" class="section-lead"></p><div class="youtube-frame"><iframe id="youtubeFrame" title="공략 재생목록" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></article><article class="dash-card alert-card"><h2>💰 벼락장터</h2><p>각인 · 보석 · 재료 시세는 별도 시세판에서 확인합니다.</p><a class="market-button" href="market.html">벼락장터 이동</a></article></div>
-      </section>
-    </main>
+        <section class="app-page" data-page="notices"><div class="dashboard-grid"><article class="dash-card schedule-card"><div class="card-title-row"><h2>📅 주요 일정</h2></div><div class="today-event"><div class="time-box"><span>오늘</span><strong id="date">로딩</strong></div><div><strong>오늘도 대환장 상황판</strong><p>공지 · 모험섬 · 이벤트 · 공략 확인</p></div></div><section id="notice" class="mini-section"><h3>📢 공지사항</h3><ul id="notices" class="notice-list clean-list"></ul></section></article><article class="dash-card guild-notice-card"><h2>📋 길드 안내</h2><ul id="guild_ads" class="guild-ad-list clean-list"></ul></article></div></section>
+        <section class="app-page" data-page="guides"><div class="dashboard-grid"><article id="guide" class="dash-card guide-card"><h2>🎬 오늘의 공략</h2><p id="youtubeTitle" class="section-lead"></p><div class="youtube-frame"><iframe id="youtubeFrame" title="공략 재생목록" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></article><article class="dash-card alert-card"><h2>💰 벼락장터</h2><p>각인 · 보석 · 재료 시세는 별도 시세판에서 확인합니다.</p><a class="market-button" href="market.html">벼락장터 이동</a></article></div></section>
+      </main>
+    </section>
   </section>
 
   <div id="error" class="error"></div>
