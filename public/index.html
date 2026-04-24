@@ -1,22 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1200, initial-scale=1.0" />
   <title>길드 신문</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <main class="paper">
+    <header class="top-ad-row">
+      <section class="ad-box">
+        <p class="ad-kicker">ARKRASIA NOTICE</p>
+        <h2>오늘도 대환장</h2>
+        <p>길드원 생존 확인 및 숙제 독촉 전문지</p>
+      </section>
 
-<h1>길드 신문</h1>
-<p id="date"></p>
+      <section class="masthead">
+        <h1>길드 신문</h1>
+        <p>모험 · 공지 · 섬 · 장터 · 대환장</p>
+      </section>
 
-<h2>📢 공지사항</h2>
-<ul id="notices"></ul>
+      <section class="ad-box">
+        <p class="ad-kicker">DAILY BRIEFING</p>
+        <h2>놓치면 손해</h2>
+        <p>오늘의 모험섬과 공지사항을 한 장에</p>
+      </section>
+    </header>
 
-<h2>🏝 오늘의 모험섬</h2>
-<ul id="islands"></ul>
+    <section class="meta-bar">
+      <span>NO. 001</span>
+      <span id="date">날짜 로딩 중</span>
+      <span>발행처 | 길드 정보국</span>
+    </section>
 
-<h3 id="error" style="color:red;"></h3>
+    <section id="error" class="error"></section>
 
-<script src="script.js"></script>
+    <section class="main-grid">
+      <article class="headline-article">
+        <p class="section-label">MAIN NOTICE</p>
+        <h2>로스트아크 공지사항 긴급 입수</h2>
+        <p class="lead">
+          오늘의 공식 공지사항을 길드 신문 편집부가 신속히 정리했습니다.
+          점검, 이벤트, 업데이트 소식을 놓치지 마십시오.
+        </p>
+        <ul id="notices" class="notice-list"></ul>
+      </article>
+
+      <aside class="side-article">
+        <p class="section-label">ADVENTURE ISLAND</p>
+        <h2>오늘의 모험섬</h2>
+        <div class="island-frame">
+          <div class="island-illustration">🏝</div>
+          <p>아크라시아 해역 특별 편성</p>
+        </div>
+        <ul id="islands" class="island-list"></ul>
+      </aside>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="market-card">
+        <h3>⚡ 벼락장터 - 모험섬 속보</h3>
+        <p>오늘 열린 섬은 확인 즉시 출항하십시오. 늦으면 보상도 낭만도 없습니다.</p>
+      </article>
+
+      <article class="market-card">
+        <h3>📢 길드 광고</h3>
+        <p>오늘도 대환장 정상 영업 중. 레이드, 모험섬, 잡담, 헛소리 모두 환영.</p>
+      </article>
+
+      <article class="market-card">
+        <h3>🪙 시세판 준비 중</h3>
+        <p>각인, 보석, 재료 시세는 다음 호부터 자동 집계 예정입니다.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
