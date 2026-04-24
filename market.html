@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0" />
+  <title>벼락장터 시세판</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="paper market-page">
+    <header class="market-masthead">
+      <a class="back-link" href="index.html">← 길드 신문으로</a>
+      <p class="section-kicker">THUNDER MARKET</p>
+      <h1>벼락장터 시세판</h1>
+      <p>각인 · 보석 · 재료 · 기타 품목을 한 장에서 확인합니다.</p>
+      <div class="market-meta">
+        <span id="marketDate">갱신일 로딩 중</span>
+        <span>기준: 로스트아크 Open API / 임시 감시 목록</span>
+      </div>
+    </header>
+
+    <div id="marketError" class="error"></div>
+
+    <section class="market-tabs" aria-label="시세 카테고리">
+      <button class="tab-button active" data-tab="engravings">각인</button>
+      <button class="tab-button" data-tab="gems">보석</button>
+      <button class="tab-button" data-tab="materials">재료</button>
+      <button class="tab-button" data-tab="etc">기타</button>
+    </section>
+
+    <section class="market-board">
+      <div class="market-summary-grid" id="marketSummary"></div>
+
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>품목</th>
+            <th>분류</th>
+            <th>현재가</th>
+            <th>최저가</th>
+            <th>전일대비</th>
+            <th>메모</th>
+          </tr>
+        </thead>
+        <tbody id="marketTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="market.js"></script>
+</body>
+</html>
