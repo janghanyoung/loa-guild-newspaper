@@ -29,6 +29,6 @@ jobs:
       - run: |
           git config user.name "bot"
           git config user.email "bot@bot.com"
-          git add daily.json
-          git commit -m "update" || echo ok
+          git add daily.json market.json
+          git commit -m "update market + daily" || echo ok
           git push
