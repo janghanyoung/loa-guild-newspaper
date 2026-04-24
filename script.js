@@ -4,24 +4,15 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentUser = null;
 let currentGuildId = "";
+let raidCache = [];
 
 const SUPPORT_CLASSES = ["바드", "홀리나이트", "도화가"];
+const PAGE_TITLES = { dashboard: "대시보드", raids: "레이드", notices: "공지/일정", guides: "공략/장터" };
 
-function $(id) {
-  return document.getElementById(id);
-}
-
-function toGuildEmail(id) {
-  return `${id.trim().replace(/\s+/g, "_")}@guild.local`;
-}
-
-function getGuildIdFromUser(user) {
-  return user?.user_metadata?.guild_id || user?.email?.replace("@guild.local", "") || "길드원";
-}
-
-function getRole(className) {
-  return SUPPORT_CLASSES.includes(className) ? "서폿" : "딜러";
-}
+function $(id) { return document.getElementById(id); }
+function toGuildEmail(id) { return `${id.trim().replace(/\s+/g, "_")}@guild.local`; }
+function getGuildIdFromUser(user) { return user?.user_metadata?.guild_id || user?.email?.replace("@guild.local", "") || "길드원"; }
+function getRole(className) { return SUPPORT_CLASSES.includes(className) ? "서폿" : "딜러"; }
 
 function setAuthMessage(message, isError = false) {
   const el = $("authMessage");
@@ -30,24 +21,51 @@ function setAuthMessage(message, isError = false) {
   el.classList.toggle("is-error", isError);
 }
 
+function friendlyNetworkError(error) {
+  if (error?.message === "Failed to fetch") {
+    return "Supabase 서버에 접속하지 못했습니다. Project URL, anon key, 브라우저 확장/광고차단, Site URL 설정을 확인하세요.";
+  }
+  return error?.message || "알 수 없는 오류";
+}
+
+function setPage(page) {
+  document.querySelectorAll(".app-page").forEach(el => el.classList.toggle("active", el.dataset.page === page));
+  document.querySelectorAll(".page-nav").forEach(el => el.classList.toggle("active", el.dataset.page === page));
+  const title = $("pageTitle");
+  if (title) title.textContent = PAGE_TITLES[page] || "대시보드";
+}
+
+function initPageNav() {
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-page]");
+    if (!button) return;
+    const page = button.dataset.page;
+    if (PAGE_TITLES[page]) setPage(page);
+  });
+}
+
 function updateAuthUI(user) {
   currentUser = user;
   currentGuildId = user ? getGuildIdFromUser(user) : "";
 
   const isLoggedIn = Boolean(user);
+  const loginLanding = $("loginLanding");
+  const intranetApp = $("intranetApp");
   const userChip = $("userChip");
   const profileName = $("profileName");
   const profileStatus = $("profileStatus");
   const raidBadge = $("raidModeBadge");
-  const loginPanel = $("loginPanel");
   const logoutButton = $("logoutButton");
   const raidName = $("raidName");
 
+  document.body.classList.toggle("auth-required", !isLoggedIn);
+  document.body.classList.toggle("authenticated", isLoggedIn);
+  if (loginLanding) loginLanding.hidden = isLoggedIn;
+  if (intranetApp) intranetApp.hidden = !isLoggedIn;
   if (userChip) userChip.textContent = isLoggedIn ? `👤 ${currentGuildId}` : "👤 로그아웃";
   if (profileName) profileName.textContent = isLoggedIn ? currentGuildId : "로그아웃";
   if (profileStatus) profileStatus.textContent = isLoggedIn ? "인증 완료" : "인증 필요";
   if (raidBadge) raidBadge.textContent = isLoggedIn ? "실시간 접수함" : "로그인 필요";
-  if (loginPanel) loginPanel.style.display = isLoggedIn ? "none" : "block";
   if (logoutButton) logoutButton.style.display = isLoggedIn ? "inline-flex" : "none";
   if (raidName && isLoggedIn) raidName.value = currentGuildId;
 }
@@ -55,48 +73,32 @@ function updateAuthUI(user) {
 async function loadDailyData() {
   const res = await fetch("./daily.json", { cache: "no-store" });
   const data = await res.json();
+  document.querySelectorAll("#date").forEach(el => el.textContent = data.date);
+  if (data.error) { $("error").textContent = data.error; return; }
 
-  $("date").textContent = data.date;
-
-  if (data.error) {
-    $("error").textContent = data.error;
-    return;
-  }
-
-  const noticeEl = $("notices");
-  noticeEl.innerHTML = "";
-  data.notices.forEach(n => {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = n.url;
-    a.target = "_blank";
-    a.textContent = n.title;
-    li.appendChild(a);
-    noticeEl.appendChild(li);
+  document.querySelectorAll("#notices").forEach(noticeEl => {
+    noticeEl.innerHTML = "";
+    data.notices.forEach(n => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = n.url; a.target = "_blank"; a.textContent = n.title;
+      li.appendChild(a); noticeEl.appendChild(li);
+    });
   });
 
   const islandEl = $("islands");
-  islandEl.innerHTML = "";
-  data.islands.forEach(i => {
-    const li = document.createElement("li");
-    li.textContent = i;
-    islandEl.appendChild(li);
-  });
+  if (islandEl) {
+    islandEl.innerHTML = "";
+    data.islands.forEach(i => { const li = document.createElement("li"); li.textContent = i; islandEl.appendChild(li); });
+  }
 
   const eventEl = $("events");
   if (eventEl && data.events) {
     eventEl.innerHTML = "";
-    data.events.forEach(e => {
-      const li = document.createElement("li");
-      li.textContent = e;
-      eventEl.appendChild(li);
-    });
+    data.events.forEach(e => { const li = document.createElement("li"); li.textContent = e; eventEl.appendChild(li); });
   }
 
-  if (data.youtube) {
-    $("youtubeFrame").src = data.youtube.playlistUrl;
-    $("youtubeTitle").textContent = data.youtube.title;
-  }
+  if (data.youtube) { $("youtubeFrame").src = data.youtube.playlistUrl; $("youtubeTitle").textContent = data.youtube.title; }
 
   const adEl = $("guildAds") || $("guild_ads");
   if (adEl && data.guildAds) {
@@ -104,179 +106,172 @@ async function loadDailyData() {
     data.guildAds.forEach(item => {
       const li = document.createElement("li");
       if (typeof item === "object") {
-        if (item.title) {
-          const title = document.createElement("strong");
-          title.textContent = item.title;
-          li.appendChild(title);
-        }
-        if (item.image) {
-          const img = document.createElement("img");
-          img.src = item.image;
-          img.alt = item.title || "길드 광고 이미지";
-          li.appendChild(img);
-        }
-        if (item.text) {
-          const p = document.createElement("p");
-          p.textContent = item.text;
-          li.appendChild(p);
-        }
-        if (item.url) {
-          const a = document.createElement("a");
-          a.href = item.url;
-          a.target = "_blank";
-          a.textContent = "바로가기";
-          li.appendChild(a);
-        }
-      } else {
-        li.textContent = item;
-      }
+        if (item.title) { const title = document.createElement("strong"); title.textContent = item.title; li.appendChild(title); }
+        if (item.image) { const img = document.createElement("img"); img.src = item.image; img.alt = item.title || "길드 광고 이미지"; li.appendChild(img); }
+        if (item.text) { const p = document.createElement("p"); p.textContent = item.text; li.appendChild(p); }
+        if (item.url) { const a = document.createElement("a"); a.href = item.url; a.target = "_blank"; a.textContent = "바로가기"; li.appendChild(a); }
+      } else li.textContent = item;
       adEl.appendChild(li);
     });
   }
 
-  if (data.islandImages && data.islandImages.length > 0) {
-    const img = data.islandImages[Math.floor(Math.random() * data.islandImages.length)];
-    $("islandImage").src = img;
+  if (data.islandImages?.length > 0) $("islandImage").src = data.islandImages[Math.floor(Math.random() * data.islandImages.length)];
+}
+
+function buildParties(raids) {
+  const groups = new Map();
+  raids.forEach(item => {
+    const key = `${item.raid || "미정"}__${item.time || "시간 미정"}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  });
+
+  const parties = [];
+  groups.forEach((members, key) => {
+    const [raid, time] = key.split("__");
+    const supports = members.filter(m => (m.role || getRole(m.class_name)) === "서폿");
+    const dealers = members.filter(m => (m.role || getRole(m.class_name)) !== "서폿");
+    const ordered = [...supports, ...dealers];
+    for (let i = 0; i < ordered.length; i += 8) {
+      parties.push({ raid, time, members: ordered.slice(i, i + 8), number: Math.floor(i / 8) + 1 });
+    }
+  });
+  return parties;
+}
+
+function renderParties(raids) {
+  const el = $("partyList");
+  if (!el) return;
+  const parties = buildParties(raids);
+  el.innerHTML = "";
+
+  if (parties.length === 0) {
+    el.innerHTML = `<p class="empty-state">파티를 구성할 신청자가 없습니다.</p>`;
+    return;
   }
+
+  parties.forEach(party => {
+    const supportCount = party.members.filter(m => (m.role || getRole(m.class_name)) === "서폿").length;
+    const dealerCount = party.members.length - supportCount;
+    const shortage = supportCount < 2;
+    const card = document.createElement("section");
+    card.className = `party-item ${shortage ? "support-shortage" : ""}`;
+    card.innerHTML = `
+      <div class="party-head">
+        <strong>${party.raid} ${party.number}파티</strong>
+        <span>${party.time}</span>
+      </div>
+      <div class="party-summary">
+        <span>인원 ${party.members.length}/8</span>
+        <span>딜러 ${dealerCount}</span>
+        <span>서폿 ${supportCount}/2</span>
+      </div>
+      ${shortage ? `<p class="support-warning">⚠️ 서폿 부족: ${2 - supportCount}명 더 필요</p>` : `<p class="support-ok">✅ 서폿 기준 충족</p>`}
+      <ul>${party.members.map(m => `<li>${m.name} · ${m.class_name || "직업 미입력"} · ${m.role || getRole(m.class_name)}</li>`).join("")}</ul>
+    `;
+    el.appendChild(card);
+  });
 }
 
 async function loadRaids() {
   if (!supabaseClient) return;
 
-  const { data, error } = await supabaseClient
-    .from("raids")
-    .select("*")
-    .order("created_at", { ascending: false });
-
+  const { data, error } = await supabaseClient.from("raids").select("*").order("created_at", { ascending: false });
   const list = $("raidList");
   if (!list) return;
   list.innerHTML = "";
 
   if (error) {
-    const li = document.createElement("li");
-    li.className = "raid-error";
-    li.textContent = `레이드 목록 로딩 실패: ${error.message}`;
-    list.appendChild(li);
+    list.innerHTML = `<li class="raid-error">레이드 목록 로딩 실패: ${error.message}</li>`;
+    renderParties([]);
     return;
   }
 
-  if (!data || data.length === 0) {
-    const li = document.createElement("li");
-    li.className = "empty-state";
-    li.textContent = "아직 접수된 레이드 신청이 없습니다.";
-    list.appendChild(li);
-    return;
-  }
+  raidCache = data || [];
+  const raidTotalCount = $("raidTotalCount");
+  if (raidTotalCount) raidTotalCount.textContent = `${raidCache.length}건`;
 
-  data.forEach(item => {
+  if (raidCache.length === 0) list.innerHTML = `<li class="empty-state">아직 접수된 레이드 신청이 없습니다.</li>`;
+
+  raidCache.forEach(item => {
     const li = document.createElement("li");
     li.className = "raid-list-item";
     const className = item.class_name || "직업 미입력";
     const role = item.role || getRole(className);
-    li.innerHTML = `
-      <div>
-        <strong>${item.raid}</strong>
-        <span>${item.name} (${className} / ${role}) · ${item.time}</span>
-      </div>
-      ${currentUser && currentUser.id === item.user_id ? `<button type="button" data-raid-id="${item.id}">취소</button>` : ""}
-    `;
+    li.innerHTML = `<div><strong>${item.raid}</strong><span>${item.name} (${className} / ${role}) · ${item.time}</span></div>${currentUser && currentUser.id === item.user_id ? `<button type="button" data-raid-id="${item.id}">취소</button>` : ""}`;
     list.appendChild(li);
   });
+  renderParties(raidCache);
 }
 
 async function handleLogin(event) {
   event.preventDefault();
   if (!supabaseClient) return setAuthMessage("Supabase 연결 실패", true);
-
   const id = $("guildId").value.trim();
   const password = $("guildPassword").value;
   if (!id || !password) return setAuthMessage("아이디와 비밀번호를 입력하세요.", true);
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: toGuildEmail(id),
-    password
-  });
-
-  if (error) return setAuthMessage(`로그인 실패: ${error.message}`, true);
-  updateAuthUI(data.user);
-  setAuthMessage("로그인 성공");
-  await loadRaids();
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email: toGuildEmail(id), password });
+    if (error) return setAuthMessage(`로그인 실패: ${error.message}`, true);
+    updateAuthUI(data.user); setAuthMessage("로그인 성공"); await loadRaids();
+  } catch (error) {
+    setAuthMessage(`로그인 실패: ${friendlyNetworkError(error)}`, true);
+  }
 }
 
 async function handleSignup() {
   if (!supabaseClient) return setAuthMessage("Supabase 연결 실패", true);
-
   const id = $("guildId").value.trim();
   const password = $("guildPassword").value;
   if (!id || !password) return setAuthMessage("아이디와 비밀번호를 입력하세요.", true);
 
-  const { data, error } = await supabaseClient.auth.signUp({
-    email: toGuildEmail(id),
-    password,
-    options: { data: { guild_id: id } }
-  });
-
-  if (error) return setAuthMessage(`회원가입 실패: ${error.message}`, true);
-  updateAuthUI(data.user);
-  setAuthMessage("회원가입 완료. 로그인되었습니다.");
-  await loadRaids();
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({ email: toGuildEmail(id), password, options: { data: { guild_id: id } } });
+    if (error) return setAuthMessage(`회원가입 실패: ${error.message}`, true);
+    updateAuthUI(data.user); setAuthMessage("회원가입 완료. 로그인되었습니다."); await loadRaids();
+  } catch (error) {
+    setAuthMessage(`회원가입 실패: ${friendlyNetworkError(error)}`, true);
+  }
 }
 
 async function handleLogout() {
   if (!supabaseClient) return;
   await supabaseClient.auth.signOut();
-  updateAuthUI(null);
-  setAuthMessage("로그아웃되었습니다.");
-  await loadRaids();
+  updateAuthUI(null); setAuthMessage("로그아웃되었습니다.");
 }
 
 async function handleRaidSubmit(event) {
   event.preventDefault();
   if (!supabaseClient) return alert("Supabase 연결 실패");
-
   const { data: { user } } = await supabaseClient.auth.getUser();
   if (!user) return alert("로그인 후 신청할 수 있습니다.");
 
   const className = $("raidClass").value;
   const role = getRole(className);
-  const name = $("raidName").value.trim() || getGuildIdFromUser(user);
-  const raid = $("raidType").value;
-  const time = $("raidTime").value.trim();
-
   const { error } = await supabaseClient.from("raids").insert({
-    name,
-    raid,
-    time,
+    name: $("raidName").value.trim() || getGuildIdFromUser(user),
+    raid: $("raidType").value,
+    time: $("raidTime").value.trim(),
     class_name: className,
     role,
     user_id: user.id
   });
-
   if (error) return alert(`신청 실패: ${error.message}`);
-
-  $("raidType").value = "";
-  $("raidClass").value = "";
-  $("raidTime").value = "";
-  $("raidName").value = getGuildIdFromUser(user);
+  $("raidType").value = ""; $("raidClass").value = ""; $("raidTime").value = ""; $("raidName").value = getGuildIdFromUser(user);
   await loadRaids();
 }
 
 async function handleRaidListClick(event) {
   const button = event.target.closest("button[data-raid-id]");
   if (!button || !supabaseClient) return;
-
-  const { error } = await supabaseClient
-    .from("raids")
-    .delete()
-    .eq("id", button.dataset.raidId);
-
+  const { error } = await supabaseClient.from("raids").delete().eq("id", button.dataset.raidId);
   if (error) return alert(`취소 실패: ${error.message}`);
   await loadRaids();
 }
 
 async function initSupabaseFeatures() {
   if (!supabaseClient) return;
-
   $("authForm")?.addEventListener("submit", handleLogin);
   $("signupButton")?.addEventListener("click", handleSignup);
   $("logoutButton")?.addEventListener("click", handleLogout);
@@ -285,13 +280,10 @@ async function initSupabaseFeatures() {
 
   const { data: { session } } = await supabaseClient.auth.getSession();
   updateAuthUI(session?.user || null);
-  await loadRaids();
-
-  supabaseClient.auth.onAuthStateChange(async (_event, session) => {
-    updateAuthUI(session?.user || null);
-    await loadRaids();
-  });
+  if (session?.user) await loadRaids();
+  supabaseClient.auth.onAuthStateChange(async (_event, session) => { updateAuthUI(session?.user || null); if (session?.user) await loadRaids(); });
 }
 
+initPageNav();
 loadDailyData();
 initSupabaseFeatures();
