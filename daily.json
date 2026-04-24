@@ -15,5 +15,8 @@
     "그릇된 욕망의 섬",
     "미지의 섬"
   ],
+  "islandImages": [
+    "assets/islands/images1"
+  ],
   "error": null
 }
