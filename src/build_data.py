@@ -65,7 +65,7 @@ def build():
         "events": ["카오스 게이트", "필드보스", "고고학 핫타임"],
         "youtube": {
             "title": "오늘의 공략 재생목록",
-            "playlistUrl": "https://www.youtube.com/embed/videoseries?list=PLxxxx"
+            "playlistUrl": "https://youtube.com/playlist?list=PLLeGJe5uPxsoWavCMFR9IlMBAUyP25L_a&si=BRMf18SvgtLM4HUy"
         },
         "guildAds": [
             "오늘도 대환장 길드원 모집 중",
