@@ -1,11 +1,11 @@
 {
-  "date": "2026-04-24 11:38",
+  "date": "2026-04-24 11:42",
   "engravings": [
     {
       "name": "전설 원한 각인서",
       "category": "전설",
       "price": "22골",
-      "lowest": "19골",
+      "lowest": "18골",
       "delta": "+17",
       "note": "묶음 1개"
     },
@@ -52,9 +52,9 @@
     {
       "name": "전설 질량 증가 각인서",
       "category": "전설",
-      "price": "75골",
-      "lowest": "70골",
-      "delta": "-5",
+      "price": "80골",
+      "lowest": "79골",
+      "delta": "0",
       "note": "묶음 1개"
     },
     {
