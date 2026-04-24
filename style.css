@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  background: #f5f6f8;
+  background: #f2f1ed;
   color: #111;
-  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .site-wrap {
@@ -11,43 +11,79 @@ body {
   padding: 40px 20px 60px;
 }
 
+/* ===== 대문 ===== */
 .front-door {
+  position: relative;
   text-align: center;
   padding: 80px 20px 60px;
   background: #ffffff;
-  border-radius: 16px;
+  border: 2px solid #111;
   margin-bottom: 30px;
+}
+
+.bureau-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 .front-door h1 {
   margin: 10px 0;
   font-size: 64px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -2px;
 }
 
+.stamp {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  border: 3px solid red;
+  color: red;
+  padding: 6px 12px;
+  font-weight: bold;
+  transform: rotate(-15deg);
+}
+
+/* ===== 3단 ===== */
 .three-column-layout {
   display: grid;
   grid-template-columns: 1fr 1.2fr 1fr;
   gap: 20px;
 }
 
-.column-card {
+.file-card {
   background: #fff;
-  border-radius: 16px;
+  border: 2px solid #111;
   padding: 20px;
+}
+
+.primary-file {
+  border-width: 3px;
+}
+
+.dossier-box {
+  border-top: 2px dashed #111;
+  padding-top: 15px;
+}
+
+.section-kicker {
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
 .notice-list li {
   padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ddd;
 }
 
 .pill-list li {
   display: inline-block;
-  margin: 5px 5px 0 0;
+  margin: 5px;
   padding: 6px 10px;
-  background: #f0f2f5;
-  border-radius: 20px;
+  border: 1px solid #111;
 }
 
 .youtube-frame {
